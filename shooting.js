@@ -20,9 +20,9 @@ var redraw =function(){
    ctx.drawImage(img_player, player_x, player_y);
  }
   for(var i=0; i<ENEMIES; i++){
-  if(enemies_hp>0){
+  if(enemies_hp[i] > 0){
     ctx.drawImage(img_enemy, enemies_x[i], enemies_y[i]);
-  }
+   }
   }
 };
 
@@ -34,7 +34,7 @@ var redraw =function(){
   var SPEED = 2;
   var RIGHT = 39;
   var LEFT = 37;
-  if (KEYS[RIGHT]&& player_x+img_player.width < canvas.width){
+  if (KEYS[RIGHT] && player_x+img_player.width < canvas.width){
      player_x += SPEED;
    }
   if (KEYS[LEFT] && player_x > 0){
@@ -54,6 +54,7 @@ var redraw =function(){
           continue;
         }
 
+       enemies_y[i] += SPEED;
 
         if (enemies_y[i] > canvas.height) {
             enemies_y[i] = -img_enemy.height;
@@ -62,6 +63,7 @@ var redraw =function(){
         }
     }
 };
+
 var hitCheck = function(x1, y1, obj1, x2, y2, obj2) {
     var cx1, cy1, cx2, cy2, r1, r2, d;
 
@@ -82,6 +84,7 @@ var hitCheck = function(x1, y1, obj1, x2, y2, obj2) {
         return false;
     }
 };
+
    var mainloop = function() {
     var startTime = new Date();
     movePlayer();
@@ -99,6 +102,7 @@ var hitCheck = function(x1, y1, obj1, x2, y2, obj2) {
             }
 
     redraw();
+
   var deltaTime = (new Date()) - startTime;
   var interval = MSPF - deltaTime;
    if(interval > 0) {
@@ -128,4 +132,4 @@ window.onload=function(){
     enemies_hp[i]=2;
    }
    mainloop();
-};
+}
