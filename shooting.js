@@ -1,4 +1,4 @@
-"use strict"
+use strict"
 var canvas, ctx;
 var FPS= 30;
 var MSPF=1000/FPS;
@@ -102,16 +102,16 @@ var redraw =function(){
      }
 
   var SPEED = 2;
-  var RIGHT = 39;
-  var LEFT = 37;
-  var SPACE = 32;
+  var RIGHT = 74;
+  var LEFT = 70;
+  var UP = 32;
   if (KEYS[RIGHT] && player_x+img_player.width < canvas.width){
      player_x += SPEED;
    }
   if (KEYS[LEFT] && player_x > 0){
       player_x -= SPEED;
   }
-  if(KEYS[SPACE] && player_fire_interval == 0){
+  if(KEYS[UP] && player_fire_interval == 0){
     for(var i=0; i<BULLETS;  i++){
       if(player_bullets_hp[i]  == 0){
         player_bullets_x[i] = player_x;
@@ -189,6 +189,75 @@ var hitCheck = function(x1, y1, obj1, x2, y2, obj2) {
         return false;
     }
 };
+　var titleloop_blinker = 0;
+	var titleloop = function() {
+	    var startTime = new Date();
+
+
+	    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+
+	    ctx.save();
+      ctx.strokeStyle = '#fff';
+	    ctx.beginPath();
+	    ctx.moveTo(20, 100);
+	    ctx.lineTo(canvas.width-20, 100);
+	    ctx.stroke();
+	    ctx.beginPath();
+	    ctx.moveTo(20, 145);
+	    ctx.lineTo(canvas.width-20, 145);
+	    ctx.stroke();
+	    ctx.strokeStyle = '#444';
+	    ctx.beginPath();
+	    ctx.moveTo(30, 90);
+	    ctx.lineTo(canvas.width-30, 90);
+	    ctx.stroke();
+	    ctx.beginPath();
+	    ctx.moveTo(30, 155);
+	    ctx.lineTo(canvas.width-30, 155);
+	    ctx.stroke();
+
+	    var text, width;
+	    ctx.font = '20px serif';
+	    ctx.textBaseline = 'middle';
+	    ctx.fillStyle = '#fff';
+      text = "JavaScript Shooting";
+ 	    width = ctx.measureText(text).width;
+ 	    ctx.fillText(text, (canvas.width - width) / 2, 120);
+
+
+ 	    titleloop_blinker++;
+ 	    if(titleloop_blinker > 20) {
+
+ 	        ctx.globalAlpha = 0.5;
+
+ 	        if(titleloop_blinker > 30) {
+ 	            titleloop_blinker = 0;
+ 	        }
+ 	    }
+ 	    ctx.font = '12px sans-serif';
+ 	    ctx.textBaseline = 'middle';
+ 	    text = "Hit esc to Start";
+ 	    width = ctx.measureText(text).width;
+ 	    ctx.fillText(text, (canvas.width - width) / 2, 240);
+ 	    ctx.globalAlpha = 1.0;
+	    ctx.restore();
+	    var ESC = 　27;
+	    if(KEYS[ESC]) {
+	        mainloop();
+	        return;
+	    }
+
+	    var deltaTime = (new Date()) - startTime;
+	    var interval = MSPF - deltaTime;
+	    if(interval > 0) {
+	        setTimeout(titleloop, interval);
+	    } else {
+	        setTimeout(titleloop, 0);
+	    }
+	};
+
+
 
   var mainloop = function() {
   var startTime = new Date();
@@ -245,7 +314,7 @@ var hitCheck = function(x1, y1, obj1, x2, y2, obj2) {
    if(interval > 0) {
       setTimeout(mainloop, interval);
     } else {
-      mainloop();
+    setTimeout(mainloop, 0);
     }
   };
   window.onkeydown=function(e){
@@ -275,5 +344,5 @@ window.onload=function(){
     enemies_y[i] =Math.random()*(canvas.height-img_enemy.height);
     enemies_hp[i]=2;
    }
-   mainloop();
+   titleloop();
 }
