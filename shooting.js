@@ -1,4 +1,4 @@
-use strict"
+"use strict"
 var canvas, ctx;
 var FPS= 30;
 var MSPF=1000/FPS;
