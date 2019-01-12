@@ -1,9 +1,11 @@
 body{
+
   background: #eee;
 }
+
 canvas{
-  background: #000;
-  display: block;
+    background-image: url("img/sfc.jpeg");
+    display: block;
     margin: auto;
   }
   }
