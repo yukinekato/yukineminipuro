@@ -1,11 +1,15 @@
-"use strict"
+// 手も足も出なかったのでとりあえず
+// https://lambdalisue.hatenablog.com/entry/2013/12/25/160910"use strict"
+// で一週間ほどかけて勉強してからつくりました。
 var canvas, ctx;
 var FPS= 30;
 var MSPF=1000/FPS;
 var KEYS = new Array(256);
+// 繰り返し（条件）
 for(var i=0; i<KEYS.length; i++){
     KEYS[i]=false;
   }
+
 var FIRE_INTERVAL = 20;
 var STAR_INTERVAL = 20;
 var BULLETS = 5;
@@ -59,6 +63,7 @@ var redraw =function(){
  ctx.fillText(text,
               canvas.width - 10 - width,
               canvas.height - 10);
+              // 条件分岐（条件）
               if(player_hp <= 0){
 	        ctx.globalAlpha = 0.5;
 	        ctx.fillStyle = '#000';
